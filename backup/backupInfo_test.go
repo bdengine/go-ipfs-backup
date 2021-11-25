@@ -31,7 +31,7 @@ func TestProtoc(t *testing.T) {
 	info := Info{
 		IdHashPin:      map[string]bool{"1": true},
 		IdHashUnpin:    map[string]string{"2": "111"},
-		TargetPeerList: []string{"p1", "p2", "p3", "p4"},
+		TargetPeerList: map[string]struct{}{"p1": {}, "p2": {}, "p3": {}, "p4": {}},
 	}
 	marshal, err := Marshal(info)
 	if err != nil {
