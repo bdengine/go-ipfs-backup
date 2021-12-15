@@ -8,6 +8,7 @@ import (
 	"github.com/ipfs/go-bitswap/message"
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-datastore"
+	"github.com/ipfs/go-datastore/query"
 	pb "github.com/ipfs/go-ipfs-backup/backup/pb"
 )
 
@@ -41,17 +42,17 @@ func GetIdHash(c string, u string) (string, error) {
 	return res, nil
 }
 
-type stringSet map[string]struct{}
+type StringSet map[string]struct{}
 
-func getStringSet(in []string) stringSet {
-	var res stringSet = map[string]struct{}{}
+func getStringSet(in []string) StringSet {
+	var res StringSet = map[string]struct{}{}
 	for _, s := range in {
 		res[s] = struct{}{}
 	}
 	return res
 }
 
-func (ss stringSet) getArray() []string {
+func (ss StringSet) GetArray() []string {
 	var res []string
 	for s, _ := range ss {
 		res = append(res, s)
@@ -59,23 +60,27 @@ func (ss stringSet) getArray() []string {
 	return res
 }
 
-func (s1 stringSet) append(ss stringSet) {
+func (s1 StringSet) append(ss StringSet) {
 	for s, s2 := range ss {
 		ss[s] = s2
 	}
 }
 
+func (s1 StringSet) Add(peer string) {
+	s1[peer] = struct{}{}
+}
+
 type Info struct {
 	IdHashPin      map[string]bool
 	IdHashUnpin    map[string]string
-	TargetPeerList stringSet
+	TargetPeerList StringSet
 }
 
 func (b *Info) GetPb() pb.BackupInfo {
 	return pb.BackupInfo{
 		IdHashPin:      b.IdHashPin,
 		IdHashUnpin:    b.IdHashUnpin,
-		TargetPeerList: b.TargetPeerList.getArray(),
+		TargetPeerList: b.TargetPeerList.GetArray(),
 	}
 }
 
@@ -215,4 +220,41 @@ func Delete(ds datastore.Datastore, cid string, u string) (int, bool, error) {
 	err = put(ds, cid, b)
 
 	return len(b.IdHashPin), false, err
+}
+
+// 移除指定cid的备份信息
+func Remove(ds datastore.Datastore, cids ...string) error {
+	for _, s := range cids {
+		err := ds.Delete(datastore.NewKey(Prefix + s))
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func GetAll(ds datastore.Datastore) (map[string]interface{}, error) {
+	q := query.Query{
+		Prefix: Prefix,
+	}
+	results, err := ds.Query(q)
+	if err != nil {
+		return nil, err
+	}
+	rest, err := results.Rest()
+	if err != nil {
+		return nil, err
+	}
+	res := map[string]interface{}{}
+	for _, entry := range rest {
+		var b Info
+		err := Unmarshal(entry.Value, &b)
+		if err != nil {
+			res[entry.Key] = err.Error()
+		} else {
+			res[entry.Key] = b
+		}
+	}
+
+	return res, nil
 }
