@@ -230,7 +230,7 @@ func Remove(ds datastore.Datastore, cids ...string) error {
 			return err
 		}
 	}
-	return nil
+	return ds.Delete(datastore.NewKey(fileBackupPrefix + cids[0]))
 }
 
 func GetAll(ds datastore.Datastore) (map[string]interface{}, error) {

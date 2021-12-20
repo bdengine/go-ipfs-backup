@@ -70,7 +70,7 @@ func GetFileBackupInfo(ds datastore.Datastore, cid string) (*FileInfo, error) {
 	if err != nil {
 		return nil, err
 	}
-	var file *FileInfo
-	err = json.Unmarshal(marshal, file)
-	return file, err
+	var file FileInfo
+	err = json.Unmarshal(marshal, &file)
+	return &file, err
 }
