@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/google/uuid"
+	"os"
 	"testing"
 )
 
@@ -49,4 +50,10 @@ func TestProtoc(t *testing.T) {
 		t.Fatal(err)
 	}
 	fmt.Printf("%v\n", res)
+}
+
+func TestQ(t *testing.T) {
+	getenv := os.Getenv("GOLOG_FILE")
+	fmt.Println(getenv)
+
 }

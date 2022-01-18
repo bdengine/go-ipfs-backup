@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package backup.info.pb;
+option go_package = "./pb;fileInfo_pb";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+message fileInfo {
+  message blockInfo {
+    string cid = 1;
+    repeated string targetPeerList = 2;
+  }
+
+  string cid = 1;
+  uint64 size = 2;
+  string uid = 3;
+  repeated blockInfo BlockList = 4;
+}

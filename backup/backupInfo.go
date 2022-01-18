@@ -129,14 +129,12 @@ func put(ds datastore.Datastore, cid string, b Info) error {
 func Puts(ds datastore.Datastore, loadList []message.Load) error {
 	for _, load := range loadList {
 		c := load.Block.Cid().String()
-		err := Put(ds, c, Info{
+		_ = Put(ds, c, Info{
 			IdHashPin:      map[string]bool{load.IdHash: true},
 			IdHashUnpin:    nil,
 			TargetPeerList: getStringSet(load.TargetPeerList),
 		})
-		if err != nil {
-			return err
-		}
+
 	}
 	return nil
 }

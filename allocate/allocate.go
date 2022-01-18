@@ -1,8 +1,8 @@
 package allocate
 
 import (
+	model "github.com/bdengine/go-ipfs-blockchain-standard/model"
 	bsmsg "github.com/ipfs/go-bitswap/message"
-	model "github.com/ipfs/go-ipfs-auth/standard/model"
 	"github.com/ipfs/go-ipfs-backup/backup"
 	"math/rand"
 	"time"

@@ -2,9 +2,9 @@ package allocate
 
 import (
 	"fmt"
+	"github.com/bdengine/go-ipfs-blockchain-standard/model"
 	"github.com/ipfs/go-bitswap/message"
 	blocks "github.com/ipfs/go-block-format"
-	"github.com/ipfs/go-ipfs-auth/standard/model"
 	"testing"
 )
 
