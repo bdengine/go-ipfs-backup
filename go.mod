@@ -16,9 +16,9 @@ require (
 
 replace (
 	github.com/ipfs/go-bitswap => ../go-bitswap
-	github.com/ipfs/go-cid => ../ipld/cid/go-cid
-	github.com/bdengine/go-ipfs-blockchain-eth => ../go-ipfs-auth/auth-source-eth
-	github.com/bdengine/go-ipfs-blockchain-selector => ../go-ipfs-auth/selector
-	github.com/bdengine/go-ipfs-blockchain-standard => ../go-ipfs-auth/standard
+	github.com/ipfs/go-cid => ../go-cid
+	github.com/bdengine/go-ipfs-blockchain-eth => ../go-ipfs-blockchain-eth
+	github.com/bdengine/go-ipfs-blockchain-selector => ../go-ipfs-blockchain-selector
+	github.com/bdengine/go-ipfs-blockchain-standard => ../go-ipfs-blockchain-selector
 	github.com/ipfs/go-ipfs-backup => ../go-ipfs-backup
 )
