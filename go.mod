@@ -19,6 +19,6 @@ replace (
 	github.com/ipfs/go-cid => ../go-cid
 	github.com/bdengine/go-ipfs-blockchain-eth => ../go-ipfs-blockchain-eth
 	github.com/bdengine/go-ipfs-blockchain-selector => ../go-ipfs-blockchain-selector
-	github.com/bdengine/go-ipfs-blockchain-standard => ../go-ipfs-blockchain-selector
+	github.com/bdengine/go-ipfs-blockchain-standard => ../go-ipfs-blockchain-standard
 	github.com/ipfs/go-ipfs-backup => ../go-ipfs-backup
 )
